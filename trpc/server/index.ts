@@ -2,9 +2,9 @@ import { createHTTPServer } from "@trpc/server/adapters/standalone";
 import { router, publicProcedure } from "./trpc";
 import { z } from "zod";
 
-const appRouter = router({
+export const appRouter = router({
   getUsers: publicProcedure.query(async () => {
-    return [{ user: 1 }, { user: 2 }];
+    return { data: [{ user: 1 }, { user: 2 }] };
   }),
   getUserById: publicProcedure.input(z.number()).query(async (opt) => {
     const { input } = opt;
@@ -20,9 +20,3 @@ const appRouter = router({
 // Export type router type signature,
 // NOT the router itself.
 export type AppRouter = typeof appRouter;
-
-const server = createHTTPServer({
-  router: appRouter,
-});
-
-server.listen(3000);

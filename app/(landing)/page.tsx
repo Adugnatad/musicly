@@ -1,20 +1,23 @@
 "use client";
 import Image from "next/image";
-import { trpc } from "@/trpc/client";
+import { trpc } from "../../utils/trpc";
 import React from "react";
 
 export default function Home() {
-  React.useEffect(() => {
-    const users = async () => {
-      try {
-        const users = await trpc.getUsers.query();
-        console.log("users", users);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
-    };
-    users();
-  }, []);
+  // React.useEffect(() => {
+  //   const users = async () => {
+  //     try {
+  //       const users = trpc.getUsers.useQuery();
+  //       console.log("users", users);
+  //     } catch (error) {
+  //       console.error("Error fetching users:", error);
+  //     }
+  //   };
+  //   users();
+  // }, []);
+
+  const users = trpc.getUserById.useQuery(1);
+  console.log(users);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
